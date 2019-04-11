@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <!--
+        结论：
+            外部的properties文件里面属性的优先级高于properties里面子节点的属性
+            dataSource里面的优先级又高于外部的properties文件
+    -->
+    <properties resource="jdbc.properties">
+        <property name="username" value="testOut"/>
+    </properties>
+
+    <!--注意配置文件类型的顺序-->
+    <settings>
+        <!--开启下划线风格转变为驼峰的风格
+            解决数据库设计采用下划线风格而javabean采用了驼峰时不匹配的问题
+        -->
+        <setting name="logImpl" value="LOG4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--默认不确定时开启-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+
+    <!--类型别名-->
+    <!--com.SHU.pojo.xxx-->
+    <!--<typeAliases>-->
+        <!--注册一个简写的类名，可以使该类名在其他的mapper文件中被引用-->
+        <!--<typeAlias type="com.SHU.pojo.girl" alias="girl"/>-->
+        <!--直接注册整个包，该包之下的所有的类都生效，默认规则为简写类名-->
+        <!--<package name="com.SHU.pojo"/>-->
+    <!--</typeAliases>-->
+
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="url" value="${url}"/>
+                <property name="driver" value="${driver}"/>
+                <!--可以通过${}表示引用properties中的属性值-->
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--注意要写‘/’，不能写‘.’-->
+        <!--第一种引入类路径-->
+        <!--<mapper resource="com/SHU/mapper/GirlMapper.xml"-->
+        <!--第二种引入url-->
+        <!--<mapper url="file://D:/java/IEDA_workspace/Mybatis_01/src/main/resources/com/SHU/GirlMapper.xml"/>-->
+        <!--第三种通过类的接口全限定名引入-->
+        <!--<mapper class="com.SHU.mapper.GirlMapper"/>-->
+        <!--第四种，引入包里-->
+        <package name="com.SHU.mapper"/>
+    </mappers>
+
+</configuration>

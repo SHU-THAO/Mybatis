@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper   PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper  namespace="com.SHU.mapper.GirlMapper">
+
+    <insert id="insert">
+        insert into girl (name,flower,birthday) values (#{name},#{flower},#{birthday})
+    </insert>
+
+    <!--这里引用了配置文件中的别名-->
+    <select id="queryById" resultType="com.SHU.pojo.girl">
+        select * from girl where id = #{id}
+    </select>
+    <select id="queryByName" resultType="com.SHU.pojo.girl">
+        select  * from girl where name = #{name}
+    </select>
+    <!--使用默认的参数名称风格并不友好，这种风格并不可取-->
+    <select id="queryByNameFlower" resultType="com.SHU.pojo.girl">
+        select * from girl where name = #{name} and flower = #{flower}
+    </select>
+    <select id="queryByNameFlower2" resultType="com.SHU.pojo.girl">
+        select * from girl where name = #{name} and flower = #{flower}
+    </select>
+    <select id="queryByNameId" resultType="com.SHU.pojo.girl">
+        select * from girl where name = #{name} and id = #{id}
+    </select>
+</mapper>
